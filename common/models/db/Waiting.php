@@ -14,6 +14,7 @@ use Yii;
  * @property double $price
  * @property integer $dt_add
  * @property integer $dt_update
+ * @property integer $status
  */
 class Waiting extends \yii\db\ActiveRecord
 {
@@ -33,7 +34,7 @@ class Waiting extends \yii\db\ActiveRecord
         return [
             [['title', 'link', 'track_number', 'price'], 'required'],
             [['price'], 'number'],
-            [['dt_add', 'dt_update'], 'integer'],
+            [['dt_add', 'dt_update', 'status'], 'integer'],
             [['title', 'link', 'track_number'], 'string', 'max' => 255],
         ];
     }
@@ -51,6 +52,7 @@ class Waiting extends \yii\db\ActiveRecord
             'price' => 'Price',
             'dt_add' => 'Dt Add',
             'dt_update' => 'Dt Update',
+            'status' => 'Status',
         ];
     }
 }

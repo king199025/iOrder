@@ -14,11 +14,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <form class="add-item" action="#">
         <fieldset>
-            <input type="text" class="input add-item__input" placeholder="Product name" required>
-            <input type="text" class="input add-item__input" placeholder="Paste link" required>
-            <input type="text" class="input add-item__input" placeholder="Tracking number" required>
-            <input type="text" class="input add-item__input add-item__input_price" placeholder="Price" required>
-            <button class="button button_size_s">Add</button>
+            <input type="text" name="Waiting[title]" class="input add-item__input" placeholder="Product name" required>
+            <input type="text" name="Waiting[link]" class="input add-item__input" placeholder="Paste link" required>
+            <input type="text" name="Waiting[track_number]" class="input add-item__input" placeholder="Tracking number" required>
+            <input type="text" name="Waiting[price]" class="input add-item__input add-item__input_price" placeholder="Price" required>
+            <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken?>" id="">
+            <button class="button button_size_s add_waiting">Add</button>
         </fieldset>
     </form>
 
@@ -29,22 +30,45 @@ $this->params['breadcrumbs'][] = $this->title;
         <?/*= Html::a('Create Waiting', ['create'], ['class' => 'btn btn-success']) */?>
     </p>-->
     <div class="table_overflow">
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            //'filterModel' => $searchModel,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-    
-                'id',
-                'title',
-                'link',
-                'track_number',
-                'price',
-                // 'dt_add',
-                // 'dt_update',
+        <table class="table table__waiting">
+            <thead class="table__thead">
+            <tr>
+                <td class="table__date">Data</td>
+                <td class="table__product">Product</td>
+                <td class="table__trackNumber">Track Number</td>
+                <td class="table__price">Price</td>
+                <td class="table__action"></td>
+            </tr>
+            </thead>
+            <tbody class="table__tbody">
+                <?= \yii\widgets\ListView::widget(
+                    [
+                        'dataProvider' => $dataProvider,
+                        'itemView' => '_list',
 
-                ['class' => 'yii\grid\ActionColumn'],
-            ],
-        ]); ?>
+                        'layout' => "{items}",
+                    ]
+                )?>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+<div class="popup waiting__popup">
+    <div class="popup__wrap">
+        <div class="popup__header">
+            <h2 class="title title_size_s popup__title">Edit Product</h2>
+            <span class="popup__close"></span>
+        </div>
+        <form class="edit-product popup__form">
+            <!--<fieldset>
+                <label class="label label_block">Product information <input type="text" class="input"></label>
+                <label class="label label_size_l">Product link <input type="text" class="input"></label>
+                <label class="label label_size_l">Tracking number <input type="text" class="input"></label>
+                <label class="label label_size_s">Price <input type="text" class="input"></label>
+            </fieldset>
+            <div class="ctrls"><button class="button">Confirm</button></div>-->
+        </form>
     </div>
 </div>

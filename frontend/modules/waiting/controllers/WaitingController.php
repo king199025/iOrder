@@ -2,6 +2,7 @@
 
 namespace frontend\modules\waiting\controllers;
 
+use common\classes\Debug;
 use Yii;
 use frontend\modules\waiting\models\Waiting;
 use frontend\modules\waiting\models\WaitingSearch;
@@ -66,7 +67,13 @@ class WaitingController extends Controller
         $model = new Waiting();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            //Debug::prn(Yii::$app->request->post());
+            $searchModel = new WaitingSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->renderPartial('add_index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -77,20 +84,41 @@ class WaitingController extends Controller
     /**
      * Updates an existing Waiting model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel(Yii::$app->request->post('id'));
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $searchModel = new WaitingSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->renderPartial('add_index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
         } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionEdit(){
+       /* Debug::prn(Yii::$app->request->post('id'));*/
+        $model = $this->findModel(Yii::$app->request->post('id'));
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $searchModel = new WaitingSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->renderPartial('add_index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        return true;
     }
 
     /**
@@ -120,5 +148,16 @@ class WaitingController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionDel(){
+        Waiting::updateAll(['status' => 0], ['id' => Yii::$app->request->post('id')]);
+    }
+
+    public function actionUpdate_modal(){
+        $model = $this->findModel(Yii::$app->request->post('id'));
+        return $this->renderPartial('modal',['model' => $model]);
+
+
     }
 }

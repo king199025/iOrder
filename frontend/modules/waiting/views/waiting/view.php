@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'price',
             'dt_add',
             'dt_update',
+            'status',
         ],
     ]) ?>
 

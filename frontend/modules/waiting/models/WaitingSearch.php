@@ -18,7 +18,7 @@ class WaitingSearch extends Waiting
     public function rules()
     {
         return [
-            [['id', 'dt_add', 'dt_update'], 'integer'],
+            [['id', 'dt_add', 'dt_update', 'status'], 'integer'],
             [['title', 'link', 'track_number'], 'safe'],
             [['price'], 'number'],
         ];
@@ -58,18 +58,21 @@ class WaitingSearch extends Waiting
             return $dataProvider;
         }
 
+        $query->where(['status' => 1]);
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'price' => $this->price,
             'dt_add' => $this->dt_add,
             'dt_update' => $this->dt_update,
+            'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'link', $this->link])
             ->andFilterWhere(['like', 'track_number', $this->track_number]);
 
+        $query->orderBy('dt_update DESC');
         return $dataProvider;
     }
 }

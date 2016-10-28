@@ -21,7 +21,7 @@ class ShowMenu extends Widget
                 'items' => [
                     [
                         'label' => 'Waiting',
-                        'url' => '#',
+                        'url' => '/',
                         'active' => Yii::$app->controller->module->id == 'waiting',
 
                     ],
