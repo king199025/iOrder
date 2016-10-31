@@ -10,7 +10,7 @@ use yii\grid\GridView;
 $this->title = 'Waitings';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="content">
+
 
     <form class="add-item" action="#">
         <fieldset>
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     </div>
-</div>
+
 <div class="popup waiting__popup">
     <div class="popup__wrap">
         <div class="popup__header">

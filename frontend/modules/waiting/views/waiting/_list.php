@@ -14,6 +14,6 @@
     <td class="table__price"><?= $model['price']; ?></td>
     <td class="table__action">
         <span data-id="<?= $model->id; ?>" data-csrf="<?= Yii::$app->request->csrfToken;?>" class="link link__waiting_edit fa fa-pencil"></span>
-        <span data-id="<?= $model->id; ?>" data-csrf="<?= Yii::$app->request->csrfToken;?>" class="link link_delete fa fa-trash-o"></span>
+        <span data-id="<?= $model->id; ?>" data-csrf="<?= Yii::$app->request->csrfToken;?>" class="link link_delete fa fa-trash-o waiting_delete"></span>
     </td>
 </tr>

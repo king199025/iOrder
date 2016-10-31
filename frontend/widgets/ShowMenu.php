@@ -11,6 +11,7 @@ namespace frontend\widgets;
 
 use Yii;
 use yii\base\Widget;
+use yii\helpers\Url;
 
 class ShowMenu extends Widget
 {
@@ -27,7 +28,8 @@ class ShowMenu extends Widget
                     ],
                     [
                         'label' => 'In Stock',
-                        'url' => '#'
+                        'url' => Url::to(['/stock/stock']),
+                        'active' => Yii::$app->controller->module->id == 'stock',
                     ],
                     [
                         'label' => 'Packed',

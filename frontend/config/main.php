@@ -40,6 +40,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'waiting/waiting',
+                'stock' => 'stock/stock',
             ]
         ],
         'mailer' => [
@@ -50,6 +51,12 @@ return [
     'modules' => [
         'waiting' => [
             'class' => 'frontend\modules\waiting\Waiting',
+        ],
+        'stock' => [
+            'class' => 'frontend\modules\stock\Stock',
+        ],
+        'address' => [
+            'class' => 'frontend\modules\address\Address',
         ],
     ],
     'params' => $params,

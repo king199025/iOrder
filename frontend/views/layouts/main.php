@@ -29,12 +29,16 @@ AppAsset::register($this);
 <?php if (Yii::$app->user->isGuest): ?>
     <?= \frontend\widgets\Login::widget(); ?>
 <?php else: ?>
+<div class="wrap">
     <nav class="nav">
         <?= \frontend\widgets\ShowMenu::widget(); ?>
     </nav>
 
 
-    <?= $content ?>
+    <div class="content">
+        <?= $content ?>
+    </div>
+</div>
 <?php endif; ?>
 
 <!--<div class="wrap">

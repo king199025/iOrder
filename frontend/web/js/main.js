@@ -1,10 +1,12 @@
 $(document).ready(function(){
 
-	 $('.link__waiting_edit').click(function() {
-
-	 	$('.waiting__popup').show();
-
+	 //$('.link__waiting_edit').click(function() {
+	 $(document).on('click', '.link__waiting_edit', function(){
+		 $('.waiting__popup').show();
 	 });
+
+
+
 
 	 $('.link__stock_edit').click(function() {
 	 	$('.stock__popup_edit').show();
