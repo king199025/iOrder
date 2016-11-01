@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </table>
     </div>
 
-
+<div class="table__send__wr">
     <table class="table table__send">
         <thead class="table__thead">
         <tr>
@@ -74,10 +74,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </thead>
         <tbody>
         <tr>
-            <td class="table__date">18.06.2016</td>
+            <td class="table__date"><?= date('d.m.Y'); ?></td>
             <td class="table__product">
-                <table class="table">
-                    <tbody>
+                <table class="table packedInfo">
+                    <!--<tbody>
                     <tr>
                         <td class="table__product">Iphone 7 Gold Edition 128 gb</td>
                         <td class="table__trackNumber">12345678901012312</td>
@@ -93,22 +93,37 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td class="table__trackNumber">12345678901012312</td>
                         <td class="table__price">$ 800</td>
                     </tr>
-                    </tbody>
+                    </tbody>-->
                 </table>
             </td>
-            <td class="table__address">Address</td>
+            <td class="table__address address__text">Address</td>
             <td class="table__description">
-                <div class="table__price_total">Total price: <span>$3800</span></div>
-                <div class="table__tn">Tracking number: <br><span>TN0001</span></div>
+                <div class="table__price_total">Total price: <span>$<span class="summPrice">0</span></span></div>
+                <div class="table__tn tarck__number">Tracking number: <br><span class="span__tarck__number">
+
+                    </span></div>
                 <div class="table__coment">Comment: <br>
-                    <span>Caution, fragile goods, special delivery </span>
+                    <span class="comment_text"></span>
                 </div>
             </td>
         </tr>
         </tbody>
     </table>
+    <form id="packedForm" action="/packed/packed/update" method="post">
+        <input type="hidden" name="packed_id" id="">
+        <input type="hidden" name="Packed[idStock]" id="">
+        <input type="hidden" name="Packed[dt_add]" value="<?= time(); ?>" id="">
+        <input type="hidden" name="Packed[address_id]" value="" id="">
+        <input type="hidden" name="Packed[price]" value="" id="">
+        <input type="hidden" name="Packed[number]" value="" id="">
+        <input type="hidden" name="Packed[comment]" value="" id="">
 
-    <span class="button">Send to packed</span>
+        <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken?>" id="">
+
+        <input type="submit" value="Send to packed" class="button" name="" id="">
+        <!--<span class="button">Send to packed</span>-->
+    </form>
+</div>
 
 
 
@@ -139,7 +154,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php foreach($address as $item): ?>
                             <div class="choose-address__item">
                                 <label>
-                                    <input type="radio" name="addres" class="radio"><span></span><?= $item->country?>, <?= $item->city?>, <?= $item->address?>, <?= $item->first_name . ' ' . $item->last_name?>
+                                    <input type="radio" value="<?= $item->id; ?>" name="addres" class="radio"><span></span><span><?= $item->country?>, <?= $item->city?>, <?= $item->address?>, <?= $item->first_name . ' ' . $item->last_name?></span>
                                 </label>
                                 <span class="link fa fa-pencil"></span>
                             </div>
@@ -148,7 +163,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </fieldset>
             <div class="ctrls">
                 <span class="link choose-address__add">+ Add new address</a></span><br>
-                <button class="button">Confirm</button>
+                <button class="button addAddresToForm">Confirm</button>
             </div>
         </form>
     </div>
@@ -179,6 +194,22 @@ $this->params['breadcrumbs'][] = $this->title;
             <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken?>" id="">
 
             <div class="ctrls"><button class="button createAddress">Confirm</button></div>
+        </form>
+    </div>
+</div>
+
+
+<div class="popup stock__popup_comment">
+    <div class="popup__wrap">
+        <div class="popup__header">
+            <h2 class="title title_size_s popup__title">Introduce Commentary</h2>
+            <span class="popup__close"></span>
+        </div>
+        <form class="edit-product popup__form">
+            <fieldset>
+                <label class="label label_block">Comment <textarea name="comment" cols="" rows="" class="textarea"></textarea></label>
+            </fieldset>
+            <div class="ctrls"><button class="button addCommentForm">Confirm</button></div>
         </form>
     </div>
 </div>

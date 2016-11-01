@@ -8,7 +8,8 @@ $(document).ready(function(){
 
 
 
-	 $('.link__stock_edit').click(function() {
+	 /*$('.link__stock_edit').click(function() {*/
+	 $(document).on('click', '.link__stock_edit', function(){
 	 	$('.stock__popup_edit').show();
 	 });
 

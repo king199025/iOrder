@@ -1,16 +1,17 @@
 <?php
 
-namespace frontend\modules\stock\models;
+namespace frontend\modules\packed\models;
 
+use common\classes\Debug;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\modules\stock\models\Stock;
+use frontend\modules\packed\models\Packed;
 
 /**
- * StockSearch represents the model behind the search form about `frontend\modules\stock\models\Stock`.
+ * PackedSearch represents the model behind the search form about `frontend\modules\packed\models\Packed`.
  */
-class StockSearch extends Stock
+class PackedSearch extends Packed
 {
     /**
      * @inheritdoc
@@ -18,9 +19,8 @@ class StockSearch extends Stock
     public function rules()
     {
         return [
-            [['id', 'dt_add', 'dt_update','status'], 'integer'],
-            [['title', 'number', 'weight', 'link'], 'safe'],
-            [['price'], 'number'],
+            [['id', 'dt_add', 'address_id', 'price'], 'integer'],
+            [['idStock', 'number', 'comment', 'status'], 'safe'],
         ];
     }
 
@@ -42,7 +42,7 @@ class StockSearch extends Stock
      */
     public function search($params)
     {
-        $query = Stock::find();
+        $query = Packed::find();
 
         // add conditions that should always apply here
 
@@ -58,23 +58,29 @@ class StockSearch extends Stock
             return $dataProvider;
         }
 
-        $query->andWhere(['status' => 1]);
+
+        $query->leftJoin('address', '`address`.`id` = `packed`.`address_id`');
+        $query->andWhere(['!=', '`packed`.`number`', 'NULL']);
+        $query->andWhere(['`packed`.`status`' => 1]);
+
 
         // grid filtering conditions
-        $query->andFilterWhere([
+        /*$query->andFilterWhere([
             'id' => $this->id,
-            'price' => $this->price,
             'dt_add' => $this->dt_add,
-            'dt_update' => $this->dt_update,
+            'address_id' => $this->address_id,
+            'price' => $this->price,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
+        $query->andFilterWhere(['like', 'idStock', $this->idStock])
             ->andFilterWhere(['like', 'number', $this->number])
-            ->andFilterWhere(['like', 'weight', $this->weight])
-            ->andFilterWhere(['like', 'link', $this->link]);
+            ->andFilterWhere(['like', 'comment', $this->comment])
+            ->andFilterWhere(['like', 'status', $this->status]);*/
 
-        $query->orderBy('dt_add DESC');
-
+        $query->orderBy('`packed`.`dt_add` DESC');
+        $query->with('address');
+        //Debug::prn($query->createCommand()->rawSql);
+        //die();
         return $dataProvider;
     }
 }

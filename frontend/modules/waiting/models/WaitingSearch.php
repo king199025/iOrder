@@ -72,7 +72,7 @@ class WaitingSearch extends Waiting
             ->andFilterWhere(['like', 'link', $this->link])
             ->andFilterWhere(['like', 'track_number', $this->track_number]);
 
-        $query->orderBy('dt_update DESC');
+        $query->orderBy('dt_add DESC');
         return $dataProvider;
     }
 }

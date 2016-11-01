@@ -1,20 +1,21 @@
 <?php
 
-namespace frontend\modules\stock\controllers;
+namespace frontend\modules\packed\controllers;
 
-use common\classes\Debug;
-use common\models\db\Address;
+
+use common\models\db\PackedStock;
+use common\models\db\Stock;
 use Yii;
-use frontend\modules\stock\models\Stock;
-use frontend\modules\stock\models\StockSearch;
+use frontend\modules\packed\models\Packed;
+use frontend\modules\packed\models\PackedSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StockController implements the CRUD actions for Stock model.
+ * PackedController implements the CRUD actions for Packed model.
  */
-class StockController extends Controller
+class PackedController extends Controller
 {
     /**
      * @inheritdoc
@@ -32,25 +33,22 @@ class StockController extends Controller
     }
 
     /**
-     * Lists all Stock models.
+     * Lists all Packed models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new StockSearch();
+        $searchModel = new PackedSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $address = Address::find()->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'address' => $address,
         ]);
     }
 
     /**
-     * Displays a single Stock model.
+     * Displays a single Packed model.
      * @param integer $id
      * @return mixed
      */
@@ -62,43 +60,57 @@ class StockController extends Controller
     }
 
     /**
-     * Creates a new Stock model.
+     * Creates a new Packed model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Stock();
+        $model = new Packed();
+        $model->save();
+        $info = [];
+        $info['id'] = $model->id;
+        $info['number'] = 'TN' . str_pad($model->id, 4, "0", STR_PAD_LEFT);
+        $result = json_encode($info);
+        return $result;
 
+/*\common\classes\Debug::prn(Yii::$app->request->post());
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $model->id;
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
-        }
+        }*/
     }
 
     /**
-     * Updates an existing Stock model.
+     * Updates an existing Packed model.
      * If update is successful, the browser will be redirected to the 'view' page.
 
      * @return mixed
      */
     public function actionUpdate()
-    {
-        $model = $this->findModel(Yii::$app->request->post('id'));
+    {//\common\classes\Debug::prn(Yii::$app->request->post());
+        $model = $this->findModel(Yii::$app->request->post('packed_id'));
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
+            $idStock = Yii::$app->request->post('Packed');
+            $idStock = $idStock['idStock'];
+            $idStock = explode(',', $idStock);
+            $k = array_pop($idStock);
 
-            $searchModel = new StockSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+             Stock::updateAll(['status' => 0], ['id' =>$idStock]);
+            foreach ($idStock as $item) {
+                $packStok = new PackedStock();
+                $packStok->packed_id = $model->id;
+                $packStok->stock_id = $item;
+                $packStok->save();
+            }
 
-            return $this->renderPartial('ajaxList', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);
+//\common\classes\Debug::prn($idStock);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -107,7 +119,7 @@ class StockController extends Controller
     }
 
     /**
-     * Deletes an existing Stock model.
+     * Deletes an existing Packed model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -120,36 +132,18 @@ class StockController extends Controller
     }
 
     /**
-     * Finds the Stock model based on its primary key value.
+     * Finds the Packed model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Stock the loaded model
+     * @return Packed the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Stock::findOne($id)) !== null) {
+        if (($model = Packed::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function actionUpdate_modal(){
-        $model = $this->findModel(Yii::$app->request->post('id'));
-        return $this->renderPartial('modal',['model' => $model]);
-    }
-
-
-    public function actionPacked(){
-        //Debug::prn(Yii::$app->request->post('id'));
-        $id = explode(',', Yii::$app->request->post('id'));
-        $k = array_pop($id);
-
-        $stock = Stock::find()->where(['id' => $id])->orderBy('dt_add Desc')->all();
-
-        return $this->renderPartial('packed', ['model' => $stock]);
-
-        //Debug::prn($id);
     }
 }

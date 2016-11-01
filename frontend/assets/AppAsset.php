@@ -21,6 +21,7 @@ class AppAsset extends AssetBundle
         'css/reset.css',
         'css/styles.min.css',
         'css/font-awesome.min.css',
+        'css/site.css',
     ];
     public $js = [
         'js/main.js',

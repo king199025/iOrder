@@ -61,7 +61,7 @@ $(document).ready(function(){
 
 
     $(document).on('click', '.waiting_delete', function(){
-        var conf = confirm('123');
+        var conf = confirm('Are you sure you want to delete?');
         if (conf == true) {
             var id = $(this).attr('data-id');
             var csrf = $(this).attr('data-csrf');
@@ -101,7 +101,7 @@ $(document).ready(function(){
             url: "/stock/stock/update_modal/",
             data: 'id=' + id + '&_csrf=' + csrf,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 $('.edit-stock').html(data);
             }
         });
@@ -122,11 +122,14 @@ $(document).ready(function(){
                 url: "/stock/stock/update/",
                 data: 'Stock[title]=' + title + '&_csrf=' + csrf + '&Stock[link]=' + link + '&Stock[price]=' + price + '&id=' + id,
                 success: function (data) {
-                    //console.log(data);
+                   // console.log(data);
                     $('.table_overflow').html(data);
                     $('.stock__popup_edit').slideUp('fast');
+                    checkedTrue();
                 }
             });
+
+
 
             //return false;
         }
@@ -169,4 +172,104 @@ $(document).ready(function(){
     });
 
 
+    $(document).on('click', '.addAddresToForm', function(e){
+
+        $('.radio').each(function(){
+            if($(this).prop('checked')){
+                var idaddress = $(this).val();
+                var textaddress = $(this).next().next().text();
+                $('.address__text').html(textaddress);
+                $("input[name='Packed[address_id]']").val(idaddress);
+            }
+        });
+        $('.stock__popup_address').hide();
+        e.preventDefault();
+        return false;
+    });
+
+    //Обработчик события при выборе товара при заказе
+    $(document).on('click', '.stockCheck', function(){
+        $('.table__send__wr').show();
+        var packedId = $("input[name='packed_id']").val();
+        if(packedId == ''){
+            generateNumber();
+        }
+        //console.log(packedId);
+        //generateNumber();
+        var id = propChecked();
+
+        $.ajax({
+            type: 'POST',
+            url: "/stock/stock/packed/",
+            data: 'id=' + id,
+            success: function (data) {
+                //console.log(data);
+                $('.packedInfo').html(data);
+                price();
+            }
+        });
+
+        $("input[name='Packed[idStock]']").val(id);
+    });
+
+    //Добавляем коммент
+    $(document).on('click', '.addCommentForm', function(e){
+        var comment = $("textarea[name='comment']").val();
+        $('.comment_text').html(comment);
+        $("input[name='Packed[comment]']").val(comment);
+        $('.stock__popup_comment').hide();
+        e.preventDefault();
+        return false;
+    });
 });
+
+
+//Собираем все нажатые чекбоксы при формировании заказа
+function propChecked() {
+    var id = '';
+    $('.stockCheck').each(function () {
+        if ($(this).prop('checked')) {
+            id += $(this).val() + ',';
+        }
+    });
+    return id;
+}
+
+//Выставить чекбоксы после редактирования
+function checkedTrue(){
+    var id = $("input[name='Packed[idStock]']").val();
+    var idArr = id.split(',');
+    $('.stockCheck').each(function () {
+        var idCur = $(this).val();
+        if ($.inArray(idCur, idArr) != -1) {
+            $(this).prop('checked', true);
+        }
+    });
+
+}
+
+function price(){
+    var price = 0;
+    $('.price__count').each(function(){
+        price = price + parseInt($(this).text(),10);
+    });
+    $('.summPrice').html(price);
+    $("input[name='Packed[price]']").val(price);
+}
+
+function generateNumber(){
+    $.ajax({
+        type: 'POST',
+        url: "/packed/packed/create/",
+        data: '',
+        success: function (data) {
+            var result = JSON.parse(data);
+            $("input[name='packed_id']").val(result.id);
+            $("input[name='Packed[number]']").val(result.number);
+            $('.span__tarck__number').html(result.number);
+
+            //console.log(result);
+        }
+    });
+    //tarck__number
+}
