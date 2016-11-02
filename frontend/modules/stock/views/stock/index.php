@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <table class="table table__stock">
             <thead class="table__thead">
             <tr>
-                <td class="table__action"><label class="checkbox"><input type="checkbox"><span></span></label></td>
+                <td class="table__action"><label class="checkbox"><input class="checkAllStock" type="checkbox"><span></span></label></td>
                 <td class="table__date">Data</td>
                 <td class="table__product">Product</td>
                 <td class="table__trackNumber">Track Number</td>
@@ -152,11 +152,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <label class="label label_block">Choose address</label>
                 <div class="choose-address__list">
                     <?php foreach($address as $item): ?>
-                            <div class="choose-address__item">
+                            <div class="choose-address__item" id="address<?= $item->id; ?>">
                                 <label>
                                     <input type="radio" value="<?= $item->id; ?>" name="addres" class="radio"><span></span><span><?= $item->country?>, <?= $item->city?>, <?= $item->address?>, <?= $item->first_name . ' ' . $item->last_name?></span>
                                 </label>
-                                <span class="link fa fa-pencil"></span>
+                                <span data-csrf="<?= Yii::$app->request->csrfToken?>" data-id="<?= $item->id; ?>" class="link fa fa-pencil editAddress"></span>
                             </div>
                     <?php endforeach; ?>
                 </div>
@@ -176,7 +176,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <span class="popup__close"></span>
             <span class="link popup__back">&#60; Choose address</span>
         </div>
-        <form class="form-address popup__form">
+        <form class="form-address popup__form addressForm">
             <fieldset>
                 <div>
                     <label class="label label_size_l">First name <input type="text" name="first_name" class="input"></label
@@ -193,7 +193,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken?>" id="">
 
-            <div class="ctrls"><button class="button createAddress">Confirm</button></div>
+            <div class="ctrls"><button class="button jobAddrss createAddress">Confirm</button></div>
         </form>
     </div>
 </div>

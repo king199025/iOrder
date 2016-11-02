@@ -50,6 +50,9 @@ return [
         ],
     ],
     'modules' => [
+        'mainpage' => [
+            'class' => 'frontend\modules\mainpage\Mainpage'
+        ],
         'waiting' => [
             'class' => 'frontend\modules\waiting\Waiting',
         ],

@@ -80,15 +80,20 @@ class AddressController extends Controller
     /**
      * Updates an existing Address model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $model = $this->findModel($id);
-
+        $model = $this->findModel(Yii::$app->request->post('id'));
+//Debug::prn($model);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $info = [];
+            $model = $this->findModel($model->id);
+            $info['html'] = $this->renderPartial('oneAddress', ['model' => $model]);
+            $info['id'] = $model->id;
+            $result = json_encode($info);
+            return $result;
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -123,5 +128,11 @@ class AddressController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+
+    public function actionModal_edit(){
+        $model = $this->findModel(Yii::$app->request->post('id'));
+        return $this->renderPartial('modal_edit', ['model' => $model]);
     }
 }

@@ -126,6 +126,7 @@ $(document).ready(function(){
                     $('.table_overflow').html(data);
                     $('.stock__popup_edit').slideUp('fast');
                     checkedTrue();
+                    packed();
                 }
             });
 
@@ -138,6 +139,24 @@ $(document).ready(function(){
     });
 
 
+    $(document).on('click', '.editAddress', function(){
+        var idAddress = $(this).attr('data-id');
+        var csrf = $(this).attr('data-csrf');
+
+        $.ajax({
+            type: 'POST',
+            url: "/address/address/modal_edit/",
+            data: 'id=' + idAddress + '&_csrf=' + csrf,
+            success: function (data) {
+                // console.log(data);
+                $('.addressForm').html(data);
+                $('.stock__popup_address_add').show();
+            }
+        });
+
+    });
+
+//Добавление адреса
     $(document).on('click', '.createAddress', function(e){
         var first_name = $("input[name='first_name']").val(),
             last_name = $("input[name='last_name']").val(),
@@ -160,6 +179,40 @@ $(document).ready(function(){
                     $('.stock__popup_address_add').hide();
                     $('.stock__popup_address').show();
                     $('.choose-address__list').prepend(data);
+
+                    /*$('.table_overflow').html(data);
+                    $('.stock__popup_edit').slideUp('fast');*/
+                }
+            });
+
+            return false;
+        }
+        e.preventDefault();
+        return false;
+    });
+    //Редактирование адреса
+    $(document).on('click', '.editAddressBtn', function(e){
+        var first_name = $("input[name='first_name']").val(),
+            last_name = $("input[name='last_name']").val(),
+            address = $("input[name='address']").val(),
+            zip_code = $("input[name='zip_code']").val(),
+            city = $("input[name='city']").val(),
+            country = $("input[name='country']").val(),
+            phone = $("input[name='phone']").val(),
+            id = $("input[name='id']").val(),
+            csrf = $("input[name='_csrf']").val();
+
+        if(first_name != '' && last_name != '' && address != '' && city != '' && country != '' && phone != '') {
+
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: "/address/address/update/",
+                data: 'Address[first_name]=' + first_name + '&_csrf=' + csrf + '&Address[last_name]=' + last_name + '&Address[address]=' + address + '&Address[city]=' + city + '&Address[country]=' + country + '&Address[phone]=' + phone + '&Address[zip_code]=' + zip_code + '&id=' + id,
+                success: function (data) {
+                    $('.stock__popup_address_add').hide();
+                    var result = JSON.parse(data);
+                    $('#address' + result.id).html(result.html);
                     /*$('.table_overflow').html(data);
                     $('.stock__popup_edit').slideUp('fast');*/
                 }
@@ -173,7 +226,6 @@ $(document).ready(function(){
 
 
     $(document).on('click', '.addAddresToForm', function(e){
-
         $('.radio').each(function(){
             if($(this).prop('checked')){
                 var idaddress = $(this).val();
@@ -187,6 +239,26 @@ $(document).ready(function(){
         return false;
     });
 
+    $(document).on('click', '.checkAllStock', function () {
+        $('.table__send__wr').show();
+        var packedId = $("input[name='packed_id']").val();
+        if(packedId == ''){
+            generateNumber();
+        }
+        if ($(this).prop('checked')) {
+            $('.stockCheck').prop("checked", true);
+        }
+        else {
+            $('.stockCheck').prop("checked", false);
+        }
+
+
+        packed();
+
+
+    });
+
+
     //Обработчик события при выборе товара при заказе
     $(document).on('click', '.stockCheck', function(){
         $('.table__send__wr').show();
@@ -196,20 +268,7 @@ $(document).ready(function(){
         }
         //console.log(packedId);
         //generateNumber();
-        var id = propChecked();
-
-        $.ajax({
-            type: 'POST',
-            url: "/stock/stock/packed/",
-            data: 'id=' + id,
-            success: function (data) {
-                //console.log(data);
-                $('.packedInfo').html(data);
-                price();
-            }
-        });
-
-        $("input[name='Packed[idStock]']").val(id);
+        packed()
     });
 
     //Добавляем коммент
@@ -272,4 +331,23 @@ function generateNumber(){
         }
     });
     //tarck__number
+}
+
+//фрмируем заказ
+
+function packed(){
+    var id = propChecked();
+
+    $.ajax({
+        type: 'POST',
+        url: "/stock/stock/packed/",
+        data: 'id=' + id,
+        success: function (data) {
+            //console.log(data);
+            $('.packedInfo').html(data);
+            price();
+        }
+    });
+
+    $("input[name='Packed[idStock]']").val(id);
 }

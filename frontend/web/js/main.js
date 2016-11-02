@@ -18,6 +18,16 @@ $(document).ready(function(){
 	 });
 
 	 $('.choose-address__add').click(function() {
+
+		 $("input[name='first_name']").val('');
+		 $("input[name='last_name']").val('');
+		 $("input[name='address']").val('');
+		 $("input[name='zip_code']").val('');
+		 $("input[name='city']").val('');
+		 $("input[name='country']").val('');
+		 $("input[name='phone']").val('');
+		$('.jobAddress').removeClass('editAddressBtn');
+		$('.jobAddress').addClass('createAddress');
 	 	$('.stock__popup_address').hide();
 	 	$('.stock__popup_address_add').show();
 	 });
