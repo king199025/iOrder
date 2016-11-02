@@ -18,20 +18,24 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        //$waiting = Waiting::find()->all();
-        $stock = Stock::find()->where(['status' => 1])->all();
-        foreach($stock as $item){
-            $waiting = Waiting::find()->where(['LIKE', 'track_number', $item->number])->one();
-            if(empty($waiting)){
-                $waitingNew = new Waiting();
-                $waitingNew->title = $item->title;
-                $waitingNew->track_number = $item->number;
-                $waitingNew->link = $item->link;
-                $waitingNew->price = $item->price;
-                $waitingNew->dt_add = time();
-                $waitingNew->dt_update = time();
+        $waiting = Waiting::find()->all();
+        //$stock = Stock::find()->where(['status' => 1])->all();
+        foreach($waiting as $item){
+            $stock = Stock::find()->where(['LIKE', 'number', $item->track_number])->one();
+            //Debug::prn($item);
+            //$waiting = Waiting::find()->where(['LIKE', 'track_number', $item->number])->one();
+            if(empty($stock)){
+                $stockNew = new Stock();
 
-                $waitingNew->save();
+                $stockNew->title = $item->title;
+                $stockNew->number = $item->track_number;
+                $stockNew->link = $item->link;
+                $stockNew->price = $item->price;
+                $stockNew->dt_add = time();
+                $stockNew->dt_update = time();
+                $stockNew->status = 1;
+
+                $stockNew->save();
             }
         }
 

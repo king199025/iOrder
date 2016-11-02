@@ -38,7 +38,8 @@ class ShowMenu extends Widget
                     ],
                     [
                         'label' => 'Shipped',
-                        'url' => '#'
+                        'url' => Url::to(['/shipped/shipped']),
+                        'active' => Yii::$app->controller->module->id == 'shipped',
                     ],
 
                 ],

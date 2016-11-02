@@ -41,7 +41,8 @@ return [
             'rules' => [
                 '' => 'waiting/waiting',
                 'stock' => 'stock/stock',
-                'packed' => 'packed/packed'
+                'packed' => 'packed/packed',
+                'shipped' => 'shipped/shipped',
             ]
         ],
         'mailer' => [
@@ -64,6 +65,9 @@ return [
         ],
         'packed' => [
             'class' => 'frontend\modules\packed\Packed',
+        ],
+        'shipped' => [
+            'class' => 'frontend\modules\shipped\Shipped',
         ],
     ],
     'params' => $params,

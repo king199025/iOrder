@@ -11,7 +11,7 @@ $stock = Stock::find()->where(['id' => $idStock])->all();
  ?>
 
 <tr>
-    <td class="table__action"><label class="checkbox"><input type="checkbox"><span></span></label></td>
+    <td class="table__action"><label class="checkbox"><input class="checkPacked" value="<?= $model['id']?>" type="checkbox"><span></span></label></td>
     <td class="table__date"><?= date('d.m.Y', $model['dt_add']); ?></td>
     <td class="table__product">
         <?php foreach($stock as $item): ?>

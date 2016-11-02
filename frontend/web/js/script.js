@@ -254,9 +254,25 @@ $(document).ready(function(){
 
 
         packed();
-
-
     });
+
+    $(document).on('click', '.checkPackedAll', function () {
+
+        if ($(this).prop('checked')) {
+            $('.checkPacked').prop("checked", true);
+        }
+        else {
+            $('.checkPacked').prop("checked", false);
+        }
+        checkPacked()
+    });
+
+    $(document).on('click', '.checkPacked', function () {
+        checkPacked()
+    });
+
+
+
 
 
     //Обработчик события при выборе товара при заказе
@@ -350,4 +366,17 @@ function packed(){
     });
 
     $("input[name='Packed[idStock]']").val(id);
+}
+
+
+//Packed собираем id всех нажаных чекбоксов и кладем их в input формы
+function checkPacked(){
+    var id = '';
+    $('.checkPacked').each(function(){
+        if ($(this).prop('checked')) {
+            id += $(this).val() + ',';
+        }
+    });
+
+    $('#id-packed').val(id);
 }
