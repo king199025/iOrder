@@ -296,6 +296,25 @@ $(document).ready(function(){
         e.preventDefault();
         return false;
     });
+
+
+    $(document).on('click', '.generete_excel', function(){
+        var id = $(this).attr('data-id');
+
+
+        $.ajax({
+            type: 'POST',
+            url: "/shipped/shipped/get_excel/",
+            data: 'id=' + id ,
+            success: function (data) {
+                console.log(data);
+                $('.fileDownload').attr('href', data);
+                $('.shipped_download_file').show();
+            }
+        });
+        console.log(id);
+    });
+
 });
 
 

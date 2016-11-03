@@ -7,7 +7,7 @@
             <span></span>
         </label></td>
     <td class="table__date"><?= date('d.m.Y', $model['dt_add'])?></td>
-    <td class="table__product"><?= $model->title; ?><a href="<?= $model['link']; ?>" class="link table__link fa fa-link"></a></td>
+    <td class="table__product"><?= $model->title; ?><a href="<?= $model['link']; ?>" target="_blank" class="link table__link fa fa-link"></a></td>
     <td class="table__trackNumber"><?= $model['number']; ?></td>
     <td class="table__weight"><?= $model['weight']; ?></td>
     <td class="table__price"><?= $model['price']; ?></td>

@@ -35,13 +35,14 @@ class WaitingController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
+    {   $model = new Waiting();
         $searchModel = new WaitingSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 

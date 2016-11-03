@@ -12,16 +12,17 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-    <form class="add-item" action="#">
+    <!--<form class="add-item" action="#">
         <fieldset>
             <input type="text" name="Waiting[title]" class="input add-item__input" placeholder="Product name" required>
             <input type="text" name="Waiting[link]" class="input add-item__input" placeholder="Paste link" required>
             <input type="text" name="Waiting[track_number]" class="input add-item__input" placeholder="Tracking number" required>
             <input type="text" name="Waiting[price]" class="input add-item__input add-item__input_price" placeholder="Price" required>
-            <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken?>" id="">
+            <input type="hidden" name="_csrf" value="<?/*= Yii::$app->request->csrfToken*/?>" id="">
             <button class="button button_size_s add_waiting">Add</button>
         </fieldset>
-    </form>
+    </form>-->
+    <?= $this->render('_form', ['model' => $model]); ?>
 
     <!--<h1><?/*= Html::encode($this->title) */?></h1>-->
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

@@ -23,7 +23,7 @@ $stockInfo = Stock::find()->where(['id' => $stock])->all();*/
 ?>
 
 
-<div class="shipped"><span class="date"><?= date('d.m.Y', $model['dt_add']);?></span> Shipped #<?= $model['id']; ?> <a href="#" class="link fa fa-download"></a></div>
+<div class="shipped"><span class="date"><?= date('d.m.Y', $model['dt_add']);?></span> Shipped #<?= $model['id']; ?> <a href="#" data-id="<?= $model['id']; ?>" class="link fa fa-download generete_excel"></a></div>
 
 
 <div class="table_overflow accordion">
@@ -43,7 +43,7 @@ $stockInfo = Stock::find()->where(['id' => $stock])->all();*/
 
         <tr>
             <td class="table__date"><?= date('d.m.y', $item->dt_add); ?></td>
-            <?php $idStock = PackedStock::find()->where(['packed_id' => $idPacked])->all();
+            <?php $idStock = PackedStock::find()->where(['packed_id' => $item->id])->all();
             $stock = [];
             foreach($idStock as $k){
                 $stock[] = $k->stock_id;
