@@ -89,6 +89,13 @@ $(document).ready(function(){
             success: function (data) {
                 //console.log(data);
                 $('.popup__form').html(data);
+                var valid3 = new Validation();
+                valid3.init({
+                    class: "valid3",
+                    eventElement: '#btnAddAddress1',
+                    event: 'onblur',
+                    ajax: false
+                });
             }
         });
     });
@@ -103,6 +110,14 @@ $(document).ready(function(){
             success: function (data) {
                 //console.log(data);
                 $('.edit-stock').html(data);
+                var valid4 = new Validation();
+                valid4.init({
+                    class: "valid4",
+                    eventElement: '#btnAddAddress1',
+                    event: 'onblur',
+                    ajax: false
+                });
+
             }
         });
     });
@@ -151,6 +166,13 @@ $(document).ready(function(){
                 // console.log(data);
                 $('.addressForm').html(data);
                 $('.stock__popup_address_add').show();
+                var valid1 = new Validation();
+                valid1.init({
+                    class: "valid1",
+                    eventElement: '#btnAddAddress1',
+                    event: 'onblur',
+                    ajax: false
+                });
             }
         });
 
@@ -314,6 +336,15 @@ $(document).ready(function(){
         });
         console.log(id);
     });
+
+    if(document.getElementById('stock__popup_address_add') != null) {
+        var valid = new Validation();
+        valid.init({
+            class: "valid",
+            eventElement: '#btnAddAddress',
+            event: 'onblur'
+        });
+    }
 
 });
 

@@ -113,6 +113,11 @@ a.desc:after {
     bottom: -19px;
     color:#e3232e;
 }
+
+.errorMsgClass {
+    position: absolute;
+    color:#e3232e;
+}
 .field-waiting-link, .field-waiting-title, .field-waiting-track_number{
     display: block;
     position: relative;

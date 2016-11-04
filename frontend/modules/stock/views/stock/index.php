@@ -169,7 +169,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-<div class="popup stock__popup_address_add">
+<div class="popup stock__popup_address_add" id="stock__popup_address_add">
     <div class="popup__wrap">
         <div class="popup__header">
             <h2 class="title title_size_s popup__title">Add Address</h2>
@@ -179,21 +179,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <form class="form-address popup__form addressForm">
             <fieldset>
                 <div>
-                    <label class="label label_size_l">First name <input type="text" name="first_name" class="input"></label
-                    ><label class="label label_size_l">Last name <input type="text" name="last_name" class="input"></label>
+                    <label class="label label_size_l">First name <input data-msg="requared input" type="text" name="first_name" class="input valid" required></label
+                    ><label class="label label_size_l">Last name <input data-msg="requared input" type="text" name="last_name" class="input valid" required></label>
                 </div>
-                <label class="label label_block">Address <input type="text" name="address" class="input"></label>
+                <label class="label label_block">Address <input data-msg="requared input" type="text" name="address" class="input valid" required></label>
                 <div>
-                    <label class="label label_size_l">City <input type="text" name="city" class="input"></label
-                    ><label class="label label_size_l">Zip code <input type="text" name="zip_code" class="input"></label
-                    ><label class="label label_size_l">Country <input type="text" name="country" class="input"></label
-                    ><label class="label label_size_l">Telefon number <input type="text" name="phone" class="input"></label>
+                    <label class="label label_size_l">City <input data-msg="requared input" type="text" name="city" class="input valid" required></label
+                    ><label class="label label_size_l">Zip code <input data-msg="requared input" type="text" name="zip_code" class="input valid" required></label
+                    ><label class="label label_size_l">Country <input data-msg="requared input" type="text" name="country" class="input valid" required></label
+                    ><label class="label label_size_l">Telefon number <input data-tpl="number" data-msg="requared input and numeric" type="text" name="phone" class="input valid" required></label>
                 </div>
             </fieldset>
 
             <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken?>" id="">
 
-            <div class="ctrls"><button class="button jobAddrss createAddress">Confirm</button></div>
+            <div class="ctrls"><button class="button jobAddrss createAddress" id="btnAddAddress">Confirm</button></div>
         </form>
     </div>
 </div>
