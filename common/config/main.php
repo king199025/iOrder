@@ -49,7 +49,7 @@ return [
             'enableGeneratingPassword' => true,
             'enableConfirmation' => true,
             'enableFlashMessages' => false,
-            'confirmWithin' => 86400,
+            'confirmWithin' => 604800,
             'cost' => 12,
             'admins' => ['admin'],
             'mailer' => [

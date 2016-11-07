@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken?>" id="">
 
-        <input type="submit" value="Send to packed" class="button" name="" id="">
+        <input type="submit" value="Send to packed" class="button  sendToPackedBtn" name="" id="">
         <!--<span class="button">Send to packed</span>-->
     </form>
 </div>

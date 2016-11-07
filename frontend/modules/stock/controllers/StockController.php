@@ -40,7 +40,7 @@ class StockController extends Controller
         $searchModel = new StockSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $address = Address::find()->all();
+        $address = Address::find()->orderBy('id DESC')->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,

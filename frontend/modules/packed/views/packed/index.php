@@ -68,6 +68,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <form action="/shipped/shipped/create" method="post">
     <input type="hidden" name="id-packed" id="id-packed">
     <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken?>" id="">
-    <input class="button" type="submit" name="Shipped[btn]" value="Send to shipped" id="">
+    <input class="button addToShipped" type="submit" name="Shipped[btn]" value="Send to shipped" id="">
 </form>
 <!--<span class="button">Send to shipped</span>-->

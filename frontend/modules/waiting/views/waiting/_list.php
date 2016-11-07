@@ -8,7 +8,7 @@
 ?>
 
 <tr>
-    <td class="table__date"><?= date('d.m.Y', $model['dt_update']); ?></td>
+    <td class="table__date"><?= date('d.m.Y', $model['dt_add']); ?></td>
     <td class="table__product"><?= $model['title']; ?><a href="<?= $model['link']; ?>" target="_blank" class="link table__link fa fa-link"></a></td>
     <td class="table__trackNumber"><?= $model['track_number']; ?></td>
     <td class="table__price"><?= $model['price']; ?></td>

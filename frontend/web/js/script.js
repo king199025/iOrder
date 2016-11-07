@@ -346,6 +346,31 @@ $(document).ready(function(){
         });
     }
 
+
+    $(document).on('click', '.addToShipped', function (e) {
+        var id = $("input[name='id-packed']").val();
+        if(id == ''){
+
+            e.preventDefault();
+            return false;
+        }
+
+    });
+
+    $(document).on('click', '.sendToPackedBtn', function (e) {
+        var price = $("input[name='Packed[price]']").val();
+        var address = $("input[name='Packed[address_id]']").val();
+
+
+        if((+price == 0) || (address == '')){
+            e.preventDefault();
+            return false;
+
+        }
+
+    });
+
+
 });
 
 
