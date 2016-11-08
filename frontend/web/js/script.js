@@ -165,6 +165,7 @@ $(document).ready(function(){
             success: function (data) {
                 // console.log(data);
                 $('.addressForm').html(data);
+                $(".address_phone").mask("+37399999999");
                 $('.stock__popup_address_add').show();
                 var valid1 = new Validation();
                 valid1.init({
@@ -346,6 +347,14 @@ $(document).ready(function(){
         });
     }
 
+    if( (document.getElementById('btnAddAddress') != null) || (document.getElementById('btnAddAddress1') != null) ) {
+        var validation = new Validation();
+        validation.init({
+            class: "valid",
+            eventElement: '#btnAddAddress'
+        });
+    }
+
 
     $(document).on('click', '.addToShipped', function (e) {
         var id = $("input[name='id-packed']").val();
@@ -370,6 +379,7 @@ $(document).ready(function(){
 
     });
 
+    $(".address_phone").mask("+37399999999");
 
 });
 

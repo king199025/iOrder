@@ -25,6 +25,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/validation.js',
+        'js/jquery.maskedinput.js',
         'js/main.js',
         'js/script.js',
     ];

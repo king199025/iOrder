@@ -14,11 +14,11 @@ class m161031_064453_create_stock_table extends Migration
     {
         $this->createTable('stock', [
             'id' => $this->primaryKey(),
-            'title' => $this->string(255)->notNull(),
+            'title' => $this->string(255),
             'number' => $this->string(255)->notNull(),
-            'weight' => $this->string(255)->notNull(),
-            'link' => $this->string(255)->notNull(),
-            'price' => $this->float()->notNull(),
+            'weight' => $this->string(255),
+            'link' => $this->string(255),
+            'price' => $this->float(),
             'dt_add' => $this->integer(11),
             'dt_update' => $this->integer(11),
             'status' => $this->integer(2)->defaultValue(1),

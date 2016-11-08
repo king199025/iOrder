@@ -151,29 +151,61 @@ class ShippedController extends Controller
     public function actionGet_excel()
     {
 
-        //$idShippped = Yii::$app->request->post('id');
-        $idShipped = 3;
+        $idShipped = Yii::$app->request->post('id');
+        //$idShipped = 3;
 
 
         $xls = Excel::php_excel();
         $xls->setActiveSheetIndex(0);
         $sheet = $xls->getActiveSheet();
-        $sheet->setTitle('Shipped #' . $idShipped);
+        $sheet->setTitle('MANIFEST #' . $idShipped);
 
-        $sheet->setCellValueByColumnAndRow(6, 1, 'Shipped #' . $idShipped);
-        $sheet->setCellValueByColumnAndRow(8, 3, 'Адрес компании получателя');
-        $sheet->setCellValueByColumnAndRow(0, 3, 'Адрес компании получателя');
+        //$sheet->setCellValueByColumnAndRow(5, 1, 'MANIFEST #' . $idShipped);
+        $sheet->setCellValue('E1','MANIFEST #' . $idShipped);
+        $sheet ->mergeCells("E1:G1");
+        $sheet->setCellValueByColumnAndRow(7, 3, 'To operator express transportation:');
+        $sheet ->mergeCells("H3:I3");
+        $sheet->setCellValueByColumnAndRow(0, 3, 'From operator express transportation:');
+        $sheet ->mergeCells("A3:C3");
 
+        $sheet->setCellValueByColumnAndRow(0, 4, 'UPL Global LLC');
+        $sheet ->mergeCells("A4:D4");
+        $sheet->setCellValueByColumnAndRow(0, 5, '3 Capitol Street Suite 1, Nashua, NH 03063, USA');
+        $sheet ->mergeCells("A5:D5");
 
-        $sheet->setCellValueByColumnAndRow(0, 8, 'Track Number');
+       // $sheet->setCellValueByColumnAndRow(3, 4, '"UniPost-Express" SRL');
+        $style = array(
+            'alignment' => array (
+                'vertical' => PHPExcel_Style_Alignment::HORIZONTAL_RIGHT
+            )
+        );
+
+        $sheet->setCellValue('F4', '"UniPost-Express" SRL');
+
+    $sheet->getStyle('F4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+        $sheet ->mergeCells("F4:I4");
+        $sheet->setCellValue('F5', 'Str. M.Kogainicanu 26, ap.22, Chisinau, MD-2001, Rep. of Moldova');
+        $sheet->getStyle('F5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+        $sheet ->mergeCells("F5:I5");
+
+        $sheet->setCellValueByColumnAndRow(0, 8, 'HAWB #');
+        $sheet->setCellValueByColumnAndRow(1, 8, 'Shipper');
+        $sheet->setCellValueByColumnAndRow(2, 8, 'Consignee');
+        $sheet->setCellValueByColumnAndRow(3, 8, 'Commodities Description');
+        $sheet->setCellValueByColumnAndRow(4, 8, 'Pcs.');
+        $sheet->setCellValueByColumnAndRow(5, 8, 'Weight, gr');
+        $sheet->setCellValueByColumnAndRow(6, 8, 'Value, $ US');
+        $sheet->setCellValueByColumnAndRow(7, 8, 'Supplier/Seller');
+        $sheet->setCellValueByColumnAndRow(8, 8, 'Consignee Address');
+        /*$sheet->setCellValueByColumnAndRow(0, 8, 'Track Number');
         $sheet->setCellValueByColumnAndRow(1, 8, 'Name company');
         $sheet->setCellValueByColumnAndRow(2, 8, 'Receiver name ');
         $sheet->setCellValueByColumnAndRow(3, 8, 'Name product');
         $sheet->setCellValueByColumnAndRow(4, 8, 'Count product');
-        $sheet->setCellValueByColumnAndRow(5, 8, 'Weight');
+        $sheet->setCellValueByColumnAndRow(5, 8, 'Weight, gr');
         $sheet->setCellValueByColumnAndRow(6, 8, 'Price');
         $sheet->setCellValueByColumnAndRow(7, 8, 'Link');
-        $sheet->setCellValueByColumnAndRow(8, 8, 'Address');
+        $sheet->setCellValueByColumnAndRow(8, 8, 'Address');*/
 
         $shippedPacked = ShippedPacked::find()->where(['shipped_id' => $idShipped])->all();
         $idPacked = [];
@@ -202,11 +234,12 @@ class ShippedController extends Controller
 
             foreach($stockInfo as $value){
 
-                $sheet->setCellValueByColumnAndRow(1, $j, 'Подставить название компании');
+                //$sheet->setCellValueByColumnAndRow(1, $j, 'Подставить название компании');
+                $sheet->setCellValueByColumnAndRow(1, $j, 'UPL Global LLC');
                 $sheet->setCellValueByColumnAndRow(2, $j, $address->first_name . ' ' . $address->last_name);
                 $sheet->setCellValueByColumnAndRow(3, $j, $value->title);
                 $sheet->setCellValueByColumnAndRow(4, $j, '1');
-                $sheet->setCellValueByColumnAndRow(5, $j, '200lg');
+                $sheet->setCellValueByColumnAndRow(5, $j, $value->weight);
                 $sheet->setCellValueByColumnAndRow(6, $j, $value->price);
                 $sheet->setCellValueByColumnAndRow(7, $j, $value->link);
                 $sheet->setCellValueByColumnAndRow(8, $j, $address->country . ',' . $address->city . ',' . $address->address);
@@ -240,10 +273,20 @@ class ShippedController extends Controller
              $i++;
          }*/
 
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
+        $sheet->getColumnDimension('I')->setAutoSize(true);
+
         //Debug::prn($_SERVER);
         $objWriter = Excel::php_write_excel($xls);
-        $objWriter->save($_SERVER['DOCUMENT_ROOT'] . '/frontend/web/excel/export.xls');
-        return '/frontend/web/excel/export.xls';
+        $objWriter->save($_SERVER['DOCUMENT_ROOT'] . '/frontend/web/excel/manifest'. $idShipped .'.xls');
+        return '/frontend/web/excel/manifest'. $idShipped .'.xls';
     }
 
 }

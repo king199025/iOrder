@@ -22,9 +22,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'price')->textInput() ?>
 
-    <?= $form->field($model, 'dt_add')->textInput() ?>
+    <?/*= $form->field($model, 'dt_add')->textInput() */?><!--
 
-    <?= $form->field($model, 'dt_update')->textInput() ?>
+    --><?/*= $form->field($model, 'dt_update')->textInput() */?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

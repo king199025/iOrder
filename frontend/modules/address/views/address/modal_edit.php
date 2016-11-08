@@ -14,7 +14,7 @@
         <label class="label label_size_l">City <input data-msg="requared input" type="text" name="city" value="<?= $model->city; ?>" class="input valid1" required></label
         ><label class="label label_size_l">Zip code <input data-msg="requared input" type="text" name="zip_code" value="<?= $model->zip_code; ?>" class="input valid1" required></label
         ><label class="label label_size_l">Country <input data-msg="requared input" type="text" name="country" value="<?= $model->country; ?>" class="input valid1" required></label
-        ><label class="label label_size_l">Telefon number <input data-tpl="number" data-msg="requared input and numeric" type="text" name="phone" value="<?= $model->phone; ?>" class="input valid1" required></label>
+        ><label class="label label_size_l">Telefon number <input data-msg="requared input" type="text" name="phone" value="<?= $model->phone; ?>" class="input valid1 address_phone" required></label>
     </div>
 </fieldset>
 

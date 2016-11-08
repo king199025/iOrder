@@ -3,6 +3,7 @@
 namespace frontend\modules\waiting\controllers;
 
 use common\classes\Debug;
+use common\models\db\Stock;
 use Yii;
 use frontend\modules\waiting\models\Waiting;
 use frontend\modules\waiting\models\WaitingSearch;
@@ -69,6 +70,33 @@ class WaitingController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //Debug::prn(Yii::$app->request->post());
+
+            $stock = Stock::find()->where(['LIKE', 'number', $model->track_number])->one();
+
+            if(empty($stock)){
+                $stockNew = new Stock();
+
+                $stockNew->title = $model->title;
+                $stockNew->number = $model->track_number;
+                $stockNew->link = $model->link;
+                $stockNew->price = $model->price;
+                $stockNew->dt_add = time();
+                $stockNew->dt_update = time();
+                $stockNew->status = 1;
+                $stockNew->save();
+            }
+            else{
+                $stock->title = $model->title;
+                //$stock->number = $model->track_number;
+                $stock->link = $model->link;
+                $stock->price = $model->price;
+                //$stock->dt_add = time();
+                $stock->dt_update = time();
+                $stock->status = 1;
+                $stock->save();
+            }
+
+
             $searchModel = new WaitingSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             return $this->renderPartial('add_index', [

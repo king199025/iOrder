@@ -187,7 +187,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <label class="label label_size_l">City <input data-msg="requared input" type="text" name="city" class="input valid" required></label
                     ><label class="label label_size_l">Zip code <input data-msg="requared input" type="text" name="zip_code" class="input valid" required></label
                     ><label class="label label_size_l">Country <input data-msg="requared input" type="text" name="country" class="input valid" required></label
-                    ><label class="label label_size_l">Telefon number <input data-tpl="number" data-msg="requared input and numeric" type="text" name="phone" class="input valid" required></label>
+                    ><label class="label label_size_l">Telefon number <input data-msg="requared input" type="text" name="phone" class="input valid address_phone" required></label>
                 </div>
             </fieldset>
 
