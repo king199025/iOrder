@@ -8,4 +8,4 @@
     <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken?>" id="">
 
 </fieldset>
-<div class="ctrls"><button class="button editStockBtn">Confirm</button></div>
+<div class="ctrls"><button class="button editStockBtn" id="editStockBtn">Confirm</button></div>

@@ -112,6 +112,7 @@ a.desc:after {
     position: absolute;
     bottom: -19px;
     color:#e3232e;
+    left: 0;
 }
 
 .errorMsgClass {
@@ -134,7 +135,11 @@ a.desc:after {
     float: left;
 }
 
-.field-waiting-price .help-block{
+
+.inputError{
+    border-color:#e3232e ;
+}
+/*.field-waiting-price .help-block{
     min-width: 295px;
     margin-left: -90px;
 }
@@ -142,6 +147,6 @@ a.desc:after {
 .field-waiting-track_number .help-block{
     min-width: 299px;
     bottom: 41px;
-}
+}*/
 
 

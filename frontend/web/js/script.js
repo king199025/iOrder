@@ -1,5 +1,5 @@
-$(document).ready(function(){
-    $(document).on('click', '.add_waiting', function(e){
+$(document).ready(function () {
+    /*$(document).on('click', '.add_waiting', function (e) {
         var title = $("input[name='Waiting[title]']").val(),
             link = $("input[name='Waiting[link]']").val(),
             number = $("input[name='Waiting[track_number]']").val(),
@@ -9,7 +9,7 @@ $(document).ready(function(){
 
         //console.log(emailB);
 
-        if(title != '' && link != '' && number != '' && price != ''){
+        if (title != '' && link != '' && number != '' && price != '') {
 
             e.preventDefault();
             $.ajax({
@@ -18,8 +18,9 @@ $(document).ready(function(){
                 data: 'Waiting[title]=' + title + '&_csrf=' + csrf + '&Waiting[link]=' + link + '&Waiting[track_number]=' + number + '&Waiting[price]=' + price,
                 success: function (data) {
                     //console.log(data);
-                    $('.table_overflow').html(data);
+
                     $("input[type='text']").val('');
+                    $('.table_overflow').html(data);
                 }
             });
 
@@ -27,9 +28,9 @@ $(document).ready(function(){
         }
         return false;
     });
+*/
 
-
-    $(document).on('click', '.btnEditWaiting', function (e) {
+   /* $(document).on('click', '.btnEditWaiting', function (e) {
         var title = $("input[name='Waiting_title']").val(),
             link = $("input[name='Waiting_link']").val(),
             number = $("input[name='Waiting_track_number']").val(),
@@ -40,7 +41,7 @@ $(document).ready(function(){
 
         //console.log(emailB);
 
-        if(title != '' && link != '' && number != '' && price != ''){
+        if (title != '' && link != '' && number != '' && price != '') {
 
             e.preventDefault();
             $.ajax({
@@ -57,10 +58,10 @@ $(document).ready(function(){
             return false;
         }
         return false;
-    });
+    });*/
 
 
-    $(document).on('click', '.waiting_delete', function(){
+    $(document).on('click', '.waiting_delete', function () {
         var conf = confirm('Are you sure you want to delete?');
         if (conf == true) {
             var id = $(this).attr('data-id');
@@ -79,7 +80,7 @@ $(document).ready(function(){
         return false;
     });
 
-    $(document).on('click', '.link__waiting_edit', function(){
+    $(document).on('click', '.link__waiting_edit', function () {
         var id = $(this).attr('data-id');
         var csrf = $(this).attr('data-csrf');
         $.ajax({
@@ -92,15 +93,36 @@ $(document).ready(function(){
                 var valid3 = new Validation();
                 valid3.init({
                     class: "valid3",
-                    eventElement: '#btnAddAddress1',
-                    event: 'onblur',
-                    ajax: false
+                    eventElement: '#btnEditWaiting',
+                    //event: 'onblur',
+                    ajax: false,
+                    submitForm: true,
+                    submitSuccess: function (err, form) {
+                        if (!err) {
+                            var title = $("input[name='Waiting_title']").val(),
+                                link = $("input[name='Waiting_link']").val(),
+                                number = $("input[name='Waiting_track_number']").val(),
+                                price = $("input[name='Waiting_price']").val(),
+                                id = $("input[name='Waiting_id']").val(),
+                                csrf = $("input[name='_csrf']").val();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "/waiting/waiting/edit/",
+                                    data: 'Waiting[title]=' + title + '&_csrf=' + csrf + '&Waiting[link]=' + link + '&Waiting[track_number]=' + number + '&Waiting[price]=' + price + '&id=' + id,
+                                    success: function (data) {
+                                        //console.log(data);
+                                        $('.table_overflow').html(data);
+                                        $('.waiting__popup').slideUp('fast');
+                                    }
+                                });
+                        }
+                    }
                 });
             }
         });
     });
 
-    $(document).on('click', '.link__stock_edit', function(){
+    $(document).on('click', '.link__stock_edit', function () {
         var id = $(this).attr('data-id');
         var csrf = $(this).attr('data-csrf');
         $.ajax({
@@ -113,23 +135,46 @@ $(document).ready(function(){
                 var valid4 = new Validation();
                 valid4.init({
                     class: "valid4",
-                    eventElement: '#btnAddAddress1',
-                    event: 'onblur',
-                    ajax: false
+                    eventElement: '#editStockBtn',
+                    //event: 'onblur',
+                    ajax: false,
+                    submitForm: true,
+                    submitSuccess: function (err, form) {
+                        if (!err) {
+                            var title = $("input[name='stock-title']").val(),
+                                link = $("input[name='stock-link']").val(),
+                                price = $("input[name='stock-price']").val(),
+                                id = $("input[name='stock-id']").val(),
+                                csrf = $("input[name='_csrf']").val();
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "/stock/stock/update/",
+                                    data: 'Stock[title]=' + title + '&_csrf=' + csrf + '&Stock[link]=' + link + '&Stock[price]=' + price + '&id=' + id,
+                                    success: function (data) {
+                                        // console.log(data);
+                                        $('.table_overflow').html(data);
+                                        $('.stock__popup_edit').slideUp('fast');
+                                        checkedTrue();
+                                        packed();
+                                    }
+                                });
+                        }
+                    }
                 });
 
             }
         });
     });
 
-    $(document).on('click', '.editStockBtn', function (e) {
+    /*$(document).on('click', '.editStockBtn', function (e) {
         var title = $("input[name='stock-title']").val(),
             link = $("input[name='stock-link']").val(),
             price = $("input[name='stock-price']").val(),
             id = $("input[name='stock-id']").val(),
             csrf = $("input[name='_csrf']").val();
 
-        if(title != '' && link != '' && price != '') {
+        if (title != '' && link != '' && price != '') {
 
             e.preventDefault();
             $.ajax({
@@ -137,7 +182,7 @@ $(document).ready(function(){
                 url: "/stock/stock/update/",
                 data: 'Stock[title]=' + title + '&_csrf=' + csrf + '&Stock[link]=' + link + '&Stock[price]=' + price + '&id=' + id,
                 success: function (data) {
-                   // console.log(data);
+                    // console.log(data);
                     $('.table_overflow').html(data);
                     $('.stock__popup_edit').slideUp('fast');
                     checkedTrue();
@@ -146,15 +191,14 @@ $(document).ready(function(){
             });
 
 
-
             //return false;
         }
         e.preventDefault();
         return false;
-    });
+    });*/
 
 
-    $(document).on('click', '.editAddress', function(){
+    $(document).on('click', '.editAddress', function () {
         var idAddress = $(this).attr('data-id');
         var csrf = $(this).attr('data-csrf');
 
@@ -171,7 +215,7 @@ $(document).ready(function(){
                 valid1.init({
                     class: "valid1",
                     eventElement: '#btnAddAddress1',
-                    event: 'onblur',
+                    //event: 'onblur',
                     ajax: false
                 });
             }
@@ -180,7 +224,7 @@ $(document).ready(function(){
     });
 
 //Добавление адреса
-    $(document).on('click', '.createAddress', function(e){
+    $(document).on('click', '.createAddress', function (e) {
         var first_name = $("input[name='first_name']").val(),
             last_name = $("input[name='last_name']").val(),
             address = $("input[name='address']").val(),
@@ -190,7 +234,7 @@ $(document).ready(function(){
             phone = $("input[name='phone']").val(),
             csrf = $("input[name='_csrf']").val();
 
-        if(first_name != '' && last_name != '' && address != '' && city != '' && country != '' && phone != '') {
+        if (first_name != '' && last_name != '' && address != '' && city != '' && country != '' && phone != '') {
 
             e.preventDefault();
             $.ajax({
@@ -204,7 +248,7 @@ $(document).ready(function(){
                     $('.choose-address__list').prepend(data);
 
                     /*$('.table_overflow').html(data);
-                    $('.stock__popup_edit').slideUp('fast');*/
+                     $('.stock__popup_edit').slideUp('fast');*/
                 }
             });
 
@@ -214,7 +258,7 @@ $(document).ready(function(){
         return false;
     });
     //Редактирование адреса
-    $(document).on('click', '.editAddressBtn', function(e){
+    $(document).on('click', '.editAddressBtn', function (e) {
         var first_name = $("input[name='first_name']").val(),
             last_name = $("input[name='last_name']").val(),
             address = $("input[name='address']").val(),
@@ -225,7 +269,7 @@ $(document).ready(function(){
             id = $("input[name='id']").val(),
             csrf = $("input[name='_csrf']").val();
 
-        if(first_name != '' && last_name != '' && address != '' && city != '' && country != '' && phone != '') {
+        if (first_name != '' && last_name != '' && address != '' && zip_code != '' && city != '' && country != '' && phone != '') {
 
             e.preventDefault();
             $.ajax({
@@ -237,7 +281,7 @@ $(document).ready(function(){
                     var result = JSON.parse(data);
                     $('#address' + result.id).html(result.html);
                     /*$('.table_overflow').html(data);
-                    $('.stock__popup_edit').slideUp('fast');*/
+                     $('.stock__popup_edit').slideUp('fast');*/
                 }
             });
 
@@ -248,9 +292,9 @@ $(document).ready(function(){
     });
 
 
-    $(document).on('click', '.addAddresToForm', function(e){
-        $('.radio').each(function(){
-            if($(this).prop('checked')){
+    $(document).on('click', '.addAddresToForm', function (e) {
+        $('.radio').each(function () {
+            if ($(this).prop('checked')) {
                 var idaddress = $(this).val();
                 var textaddress = $(this).next().next().text();
                 $('.address__text').html(textaddress);
@@ -265,7 +309,7 @@ $(document).ready(function(){
     $(document).on('click', '.checkAllStock', function () {
         $('.table__send__wr').show();
         var packedId = $("input[name='packed_id']").val();
-        if(packedId == ''){
+        if (packedId == '') {
             generateNumber();
         }
         if ($(this).prop('checked')) {
@@ -295,14 +339,11 @@ $(document).ready(function(){
     });
 
 
-
-
-
     //Обработчик события при выборе товара при заказе
-    $(document).on('click', '.stockCheck', function(){
+    $(document).on('click', '.stockCheck', function () {
         $('.table__send__wr').show();
         var packedId = $("input[name='packed_id']").val();
-        if(packedId == ''){
+        if (packedId == '') {
             generateNumber();
         }
         //console.log(packedId);
@@ -311,7 +352,7 @@ $(document).ready(function(){
     });
 
     //Добавляем коммент
-    $(document).on('click', '.addCommentForm', function(e){
+    $(document).on('click', '.addCommentForm', function (e) {
         var comment = $("textarea[name='comment']").val();
         $('.comment_text').html(comment);
         $("input[name='Packed[comment]']").val(comment);
@@ -321,14 +362,14 @@ $(document).ready(function(){
     });
 
 
-    $(document).on('click', '.generete_excel', function(){
+    $(document).on('click', '.generete_excel', function () {
         var id = $(this).attr('data-id');
 
 
         $.ajax({
             type: 'POST',
             url: "/shipped/shipped/get_excel/",
-            data: 'id=' + id ,
+            data: 'id=' + id,
             success: function (data) {
                 console.log(data);
                 $('.fileDownload').attr('href', data);
@@ -338,27 +379,58 @@ $(document).ready(function(){
         console.log(id);
     });
 
-    if(document.getElementById('stock__popup_address_add') != null) {
+    if (document.getElementById('stock__popup_address_add') != null) {
         var valid = new Validation();
         valid.init({
             class: "valid",
             eventElement: '#btnAddAddress',
-            event: 'onblur'
+            //event: 'onblur'
         });
     }
 
-    if( (document.getElementById('btnAddAddress') != null) || (document.getElementById('btnAddAddress1') != null) ) {
+    if ((document.getElementById('btnAddAddress') != null) || (document.getElementById('btnAddAddress1') != null)) {
         var validation = new Validation();
         validation.init({
             class: "valid",
             eventElement: '#btnAddAddress'
         });
     }
+    if ((document.getElementById('addWaiting') != null)) {
+        var validationW = new Validation();
+        validationW.init({
+            class: "validW",
+            eventElement: '#addWaiting',
+            errorMessageClass: 'help-block',
+            ajax: false,
+            submitForm: true,
+            submitSuccess: function (err, form) {
+                if (!err) {
+                    var title = $("input[name='Waiting[title]']").val(),
+                        link = $("input[name='Waiting[link]']").val(),
+                        number = $("input[name='Waiting[track_number]']").val(),
+                        price = $("input[name='Waiting[price]']").val(),
+                        csrf = $("input[name='_csrf']").val();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "/waiting/waiting/create/",
+                        data: 'Waiting[title]=' + title + '&_csrf=' + csrf + '&Waiting[link]=' + link + '&Waiting[track_number]=' + number + '&Waiting[price]=' + price,
+                        success: function (data) {
+                            //console.log(data);
+
+                            $("input[type='text']").val('');
+                            $('.table_overflow').html(data);
+                        }
+                    });
+                }
+            }
+        });
+    }
 
 
     $(document).on('click', '.addToShipped', function (e) {
         var id = $("input[name='id-packed']").val();
-        if(id == ''){
+        if (id == '') {
 
             e.preventDefault();
             return false;
@@ -371,7 +443,7 @@ $(document).ready(function(){
         var address = $("input[name='Packed[address_id]']").val();
 
 
-        if((+price == 0) || (address == '')){
+        if ((+price == 0) || (address == '')) {
             e.preventDefault();
             return false;
 
@@ -396,7 +468,7 @@ function propChecked() {
 }
 
 //Выставить чекбоксы после редактирования
-function checkedTrue(){
+function checkedTrue() {
     var id = $("input[name='Packed[idStock]']").val();
     var idArr = id.split(',');
     $('.stockCheck').each(function () {
@@ -408,16 +480,16 @@ function checkedTrue(){
 
 }
 
-function price(){
+function price() {
     var price = 0;
-    $('.price__count').each(function(){
-        price = price + parseInt($(this).text(),10);
+    $('.price__count').each(function () {
+        price = price + parseInt($(this).text(), 10);
     });
     $('.summPrice').html(price);
     $("input[name='Packed[price]']").val(price);
 }
 
-function generateNumber(){
+function generateNumber() {
     $.ajax({
         type: 'POST',
         url: "/packed/packed/create/",
@@ -436,7 +508,7 @@ function generateNumber(){
 
 //фрмируем заказ
 
-function packed(){
+function packed() {
     var id = propChecked();
 
     $.ajax({
@@ -455,9 +527,9 @@ function packed(){
 
 
 //Packed собираем id всех нажаных чекбоксов и кладем их в input формы
-function checkPacked(){
+function checkPacked() {
     var id = '';
-    $('.checkPacked').each(function(){
+    $('.checkPacked').each(function () {
         if ($(this).prop('checked')) {
             id += $(this).val() + ',';
         }

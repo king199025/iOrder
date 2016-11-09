@@ -4,6 +4,7 @@ namespace frontend\modules\stock\controllers;
 
 use common\classes\Debug;
 use common\models\db\Address;
+use common\models\db\Waiting;
 use Yii;
 use frontend\modules\stock\models\Stock;
 use frontend\modules\stock\models\StockSearch;
@@ -71,7 +72,45 @@ class StockController extends Controller
         $model = new Stock();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+
+            //$waiting = Waiting::find()->where(['LIKE', 'track_number', $model->number])->one();
+            //$stock = Stock::find()->where(['LIKE', 'number', $model->track_number])->one();
+            $waiting = Waiting::find()->where(['status' => 1])->all();
+            foreach ($waiting as $item){
+                $stock = Stock::find()->where(['LIKE', 'number', $item->track_number])->andWhere(['status' => 1])->one();
+                if(!empty($stock)){
+                    //$stock = Stock::find()->where(['id' => $model->id])->one();
+                    $stock->title = $item->title;
+                    //$stock->number = $model->track_number;
+                    $stock->link = $item->link;
+                    $stock->price = $item->price;
+                    //$stock->dt_add = time();
+                    $stock->dt_update = time();
+                    $stock->status = 1;
+                    $stock->save();
+
+                    Waiting::updateAll(['status' => 0], ['id' => $item->id]);
+
+                }
+            }
+            /*if(!empty($waiting)){
+                $stock = Stock::find()->where(['id' => $model->id])->one();
+                $stock->title = $waiting->title;
+                //$stock->number = $model->track_number;
+                $stock->link = $waiting->link;
+                $stock->price = $waiting->price;
+                //$stock->dt_add = time();
+                $stock->dt_update = time();
+                $stock->status = 1;
+                $stock->save();
+            }
+            else{
+
+            }*/
+
+
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

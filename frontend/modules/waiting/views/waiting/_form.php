@@ -10,16 +10,27 @@ use yii\widgets\ActiveForm;
 
 
 
-    <?php $form = ActiveForm::begin(['action' => '#', 'options' => ['class' => 'add-item']]); ?>
+    <?php $form = ActiveForm::begin(
+        [
+            'action' => '#',
+            'options' =>
+                [
+                    'class' => 'add-item'
+                ],
+            'enableAjaxValidation'   => false,
+            'enableClientValidation' => false,
+            'validateOnBlur'         => false,
+        ]
+    ); ?>
     <fieldset>
-        <?= $form->field($model, 'title')->textInput(['placeholder' => 'Product name','maxlength' => true, 'class' => 'input add-item__input'])->label(false) ?>
+        <?= $form->field($model, 'title')->textInput(['placeholder' => 'Product name','maxlength' => true, 'class' => 'input add-item__input validW', 'required' => 'required', 'data-msg' => 'Required'])->label(false) ?>
 
-        <?= $form->field($model, 'link')->textInput(['placeholder' => 'Paste link', 'maxlength' => true, 'class' => 'input add-item__input'])->label(false); ?>
+        <?= $form->field($model, 'link')->textInput(['placeholder' => 'Paste link', 'maxlength' => true, 'class' => 'input add-item__input validW', 'required' => 'required', 'data-msg' => 'Required' ])->label(false); ?>
 
-        <?= $form->field($model, 'track_number')->textInput(['placeholder' => 'Tracking number','maxlength' => true, 'class' => 'input add-item__input'])->label(false) ?>
+        <?= $form->field($model, 'track_number')->textInput(['placeholder' => 'Tracking number','maxlength' => true, 'class' => 'input add-item__input validW', 'required' => 'required', 'data-msg' => 'Required'])->label(false) ?>
 
-        <?= $form->field($model, 'price')->textInput(['placeholder' => 'Price','class' => 'input add-item__input add-item__input_price'])->label(false) ?>
-        <?= Html::submitButton('Add',['class' => 'button button_size_s add_waiting']) ?>
+        <?= $form->field($model, 'price')->textInput(['placeholder' => 'Price','class' => 'input add-item__input add-item__input_price validW', 'required' => 'required', 'data-tpl' => 'number' , 'data-msg' => 'Digits required'])->label(false) ?>
+        <?= Html::submitButton('Add',['class' => 'button button_size_s add_waiting', 'id' => 'addWaiting']) ?>
     </fieldset>
 
     <?php ActiveForm::end(); ?>
