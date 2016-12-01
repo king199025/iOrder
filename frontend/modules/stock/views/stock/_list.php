@@ -9,13 +9,24 @@
     <td class="table__date"><?= date('d.m.Y', $model['dt_add'])?></td>
     <td class="table__product"><?= $model->title; ?>
         <?php if(!empty($model['link'])): ?>
-            <a href="<?= $model['link']; ?>" target="_blank" class="link table__link fa fa-link"></a>
+            <?php
+            $link = '';
+            $rest = substr($model['link'], 0, 4);
+            if($rest == 'http'){
+                $link = $model['link'];
+            }else{
+                $link = 'http://' . $model['link'];
+            }
+            ?>
+
+
+            <a href="<?= $link; ?>" title="<?= $link; ?>" target="_blank" class="link table__link fa fa-link"></a>
         <?php endif; ?>
     </td>
     <td class="table__trackNumber"><?= $model['number']; ?></td>
     <td class="table__weight"><?= $model['weight']; ?></td>
     <td class="table__price"><?= $model['price']; ?></td>
     <td class="table__action">
-        <span data-id="<?= $model['id'];?>" data-csrf="<?= Yii::$app->request->csrfToken;?>" class="link link__stock_edit fa fa-pencil"></span>
+        <span title="Edit" data-id="<?= $model['id'];?>" data-csrf="<?= Yii::$app->request->csrfToken;?>" class="link link__stock_edit fa fa-pencil"></span>
     </td>
 </tr>

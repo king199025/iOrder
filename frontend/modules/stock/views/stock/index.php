@@ -36,6 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); */?>
+
+<?= Html::a('Synchronize', ['synchronize'], ['class' => 'button button_size_s']) ?>
+
     <div class="table_overflow">
         <table class="table table__stock">
             <thead class="table__thead">
@@ -156,7 +159,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <label>
                                     <input type="radio" value="<?= $item->id; ?>" name="addres" class="radio"><span></span><span><?= $item->country?>, <?= $item->city?>, <?= $item->address?>, <?= $item->first_name . ' ' . $item->last_name?></span>
                                 </label>
-                                <span data-csrf="<?= Yii::$app->request->csrfToken?>" data-id="<?= $item->id; ?>" class="link fa fa-pencil editAddress"></span>
+                                <span data-csrf="<?= Yii::$app->request->csrfToken?>" data-id="<?= $item->id; ?>" title="Edit" class="link fa fa-pencil editAddress"></span>
                             </div>
                     <?php endforeach; ?>
                 </div>

@@ -20,7 +20,7 @@ $stock = Stock::find()->where(['id' => $idStock])->all();
 
     </td>
     <td class="table__trackNumber"><?= $model['number'];?></td>
-    <td class="table__weight">200 lb</td>
+    <td class="table__weight"></td>
     <td class="table__price">$<?= $model->price; ?></td>
     <td class="table__info">
         <div class="address">

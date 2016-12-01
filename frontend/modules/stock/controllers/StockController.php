@@ -76,24 +76,7 @@ class StockController extends Controller
 
             //$waiting = Waiting::find()->where(['LIKE', 'track_number', $model->number])->one();
             //$stock = Stock::find()->where(['LIKE', 'number', $model->track_number])->one();
-            $waiting = Waiting::find()->where(['status' => 1])->all();
-            foreach ($waiting as $item){
-                $stock = Stock::find()->where(['LIKE', 'number', $item->track_number])->andWhere(['status' => 1])->one();
-                if(!empty($stock)){
-                    //$stock = Stock::find()->where(['id' => $model->id])->one();
-                    $stock->title = $item->title;
-                    //$stock->number = $model->track_number;
-                    $stock->link = $item->link;
-                    $stock->price = $item->price;
-                    //$stock->dt_add = time();
-                    $stock->dt_update = time();
-                    $stock->status = 1;
-                    $stock->save();
 
-                    Waiting::updateAll(['status' => 0], ['id' => $item->id]);
-
-                }
-            }
             /*if(!empty($waiting)){
                 $stock = Stock::find()->where(['id' => $model->id])->one();
                 $stock->title = $waiting->title;
@@ -190,5 +173,30 @@ class StockController extends Controller
         return $this->renderPartial('packed', ['model' => $stock]);
 
         //Debug::prn($id);
+    }
+
+
+    public function actionSynchronize(){ $waiting = Waiting::find()->where(['status' => 1])->all();
+        foreach ($waiting as $item){
+            $stock = Stock::find()->where(['LIKE', 'number', $item->track_number])->andWhere(['status' => 1])->one();
+            if(!empty($stock)){
+                //$stock = Stock::find()->where(['id' => $model->id])->one();
+                $stock->title = $item->title;
+                //$stock->number = $model->track_number;
+                $stock->link = $item->link;
+                $stock->price = $item->price;
+                //$stock->weiting = $stock->weiting;
+                //$stock->dt_add = time();
+                $stock->dt_update = time();
+                $stock->status = 1;
+                $stock->save();
+//return $this->render('in');
+//Debug::prn($stock->getErrors());
+                Waiting::updateAll(['status' => 0], ['id' => $item->id]);
+
+            }
+        }
+
+        return $this->redirect(['index']);
     }
 }

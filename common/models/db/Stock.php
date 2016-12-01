@@ -10,10 +10,10 @@ use Yii;
  * @property integer $id
  * @property string $title
  * @property string $number
- * @property string $weight
+ * @property double $weight
  * @property string $link
  * @property double $price
- * @property integer $dt_add
+ * @property string $dt_add
  * @property integer $dt_update
  * @property integer $status
  */
@@ -34,9 +34,10 @@ class Stock extends \yii\db\ActiveRecord
     {
         return [
             [['number'], 'required'],
-            [['price'], 'number'],
-            [['dt_add', 'dt_update', 'status'], 'integer'],
-            [['title', 'number', 'weight', 'link'], 'string', 'max' => 255],
+            [['weight', 'price'], 'number'],
+            [['dt_add'], 'safe'],
+            [['dt_update', 'status'], 'integer'],
+            [['title', 'number', 'link'], 'string', 'max' => 255],
         ];
     }
 

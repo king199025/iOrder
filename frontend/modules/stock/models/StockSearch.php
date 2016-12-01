@@ -20,7 +20,7 @@ class StockSearch extends Stock
         return [
             [['id', 'dt_add', 'dt_update','status'], 'integer'],
             [['title', 'number', 'weight', 'link'], 'safe'],
-            [['price'], 'number'],
+
         ];
     }
 

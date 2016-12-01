@@ -33,7 +33,7 @@ class Waiting extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'link', 'track_number', 'price'], 'required'],
-            [['price'], 'number'],
+
             [['dt_add', 'dt_update', 'status'], 'integer'],
             [['title', 'link', 'track_number'], 'string', 'max' => 255],
         ];

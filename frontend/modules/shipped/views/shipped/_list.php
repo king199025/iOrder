@@ -59,7 +59,7 @@ $stockInfo = Stock::find()->where(['id' => $stock])->all();*/
                 <?php endforeach; ?>
             </td>
             <td class="table__trackNumber"><?= $item->number; ?></td>
-            <td class="table__weight">200 lb</td>
+            <td class="table__weight"></td>
             <td class="table__price">$<?= $item->price; ?></td>
             <td class="table__info">
                 <div class="address">
