@@ -15,7 +15,7 @@ $stock = Stock::find()->where(['id' => $idStock])->all();
     <td class="table__date"><?= date('d.m.Y', $model['dt_add']); ?></td>
     <td class="table__product">
         <?php foreach($stock as $item): ?>
-            <div><?= $item->title; ?><a href="<?= $item->link; ?>" class="link table__link fa fa-link"></a><br><span><?= $item->number;?></span></div>
+            <div><?= $item->title; ?><a href="<?= $item->link; ?>" class="link table__link fa fa-link"></a><br><span><?= $item->track_number;?></span></div>
         <?php endforeach; ?>
 
     </td>

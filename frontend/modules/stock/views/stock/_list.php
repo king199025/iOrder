@@ -23,7 +23,7 @@
             <a href="<?= $link; ?>" title="<?= $link; ?>" target="_blank" class="link table__link fa fa-link"></a>
         <?php endif; ?>
     </td>
-    <td class="table__trackNumber"><?= $model['number']; ?></td>
+    <td class="table__trackNumber"><?= $model['track_number']; ?></td>
     <td class="table__weight"><?= $model['weight']; ?></td>
     <td class="table__price"><?= $model['price']; ?></td>
     <td class="table__action">

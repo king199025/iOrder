@@ -19,7 +19,7 @@ class StockSearch extends Stock
     {
         return [
             [['id', 'dt_add', 'dt_update','status'], 'integer'],
-            [['title', 'number', 'weight', 'link'], 'safe'],
+            [['title', 'track_number', 'weight', 'link'], 'safe'],
 
         ];
     }
@@ -69,7 +69,7 @@ class StockSearch extends Stock
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'number', $this->number])
+            ->andFilterWhere(['like', 'track_number', $this->track_number])
             ->andFilterWhere(['like', 'weight', $this->weight])
             ->andFilterWhere(['like', 'link', $this->link]);
 

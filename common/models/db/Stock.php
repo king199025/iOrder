@@ -9,7 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $title
- * @property string $number
+ * @property string $track_number
  * @property double $weight
  * @property string $link
  * @property double $price
@@ -33,11 +33,11 @@ class Stock extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['number'], 'required'],
+            [['track_number'], 'required'],
             [['weight', 'price'], 'number'],
             [['dt_add'], 'safe'],
             [['dt_update', 'status'], 'integer'],
-            [['title', 'number', 'link'], 'string', 'max' => 255],
+            [['title', 'track_number', 'link'], 'string', 'max' => 255],
         ];
     }
 
@@ -49,7 +49,7 @@ class Stock extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'title' => 'Title',
-            'number' => 'Number',
+            'track_number' => 'Number',
             'weight' => 'Weight',
             'link' => 'Link',
             'price' => 'Price',

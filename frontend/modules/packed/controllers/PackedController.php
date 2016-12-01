@@ -3,6 +3,8 @@
 namespace frontend\modules\packed\controllers;
 
 
+use common\classes\Debug;
+use common\models\db\Address;
 use common\models\db\PackedStock;
 use common\models\db\Stock;
 use Yii;
@@ -102,12 +104,33 @@ class PackedController extends Controller
             $k = array_pop($idStock);
 
              Stock::updateAll(['status' => 0], ['id' =>$idStock]);
+
             foreach ($idStock as $item) {
                 $packStok = new PackedStock();
                 $packStok->packed_id = $model->id;
                 $packStok->stock_id = $item;
                 $packStok->save();
             }
+
+            //$packed = $this->findModel($model->id);
+            $stock = Stock::find()->where(['id' => $idStock])->all();
+            //Debug::prn($stock);
+
+            $html = "Hello, JayKay. We have packed for you a new order: <br />Package Tracking Number: $model->number <br />Products: ";
+            foreach ($stock as $item){
+                $html .= $item->title . '(' . $item->track_number .  '),' . $item->weight . 'lb, ' . $item->price . '$ <br />';
+            }
+
+$address = Address::find()->where(['id' => $model->address_id])->one();
+            $html .= "Address:  $address->country, $address->city, $address->address<br />Comment: $model->comment <br />Best regards, iOrder team. ";
+
+            Yii::$app->mailer->compose()
+                ->setFrom('dima_ftp@iwebit.ru')
+                ->setTo('vl.lukashev@gmail.com')
+                ->setSubject('New order')
+                //->setTextBody('Текст сообщения')
+                ->setHtmlBody($html)
+                ->send();
 
 //\common\classes\Debug::prn($idStock);
             return $this->redirect(['index']);

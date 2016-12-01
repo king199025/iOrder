@@ -55,7 +55,7 @@ $stockInfo = Stock::find()->where(['id' => $stock])->all();*/
                 <?php foreach($stockInfo as $value):
 
                     ?>
-                    <div><?= $value->title; ?><a href="<?= $value->link; ?>" class="link table__link fa fa-link"></a><br><span><?= $value->number; ?></span></div>
+                    <div><?= $value->title; ?><a href="<?= $value->link; ?>" class="link table__link fa fa-link"></a><br><span><?= $value->track_number; ?></span></div>
                 <?php endforeach; ?>
             </td>
             <td class="table__trackNumber"><?= $item->number; ?></td>

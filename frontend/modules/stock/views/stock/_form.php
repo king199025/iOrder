@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'number')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'track_number')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'weight')->textInput(['maxlength' => true]) ?>
 

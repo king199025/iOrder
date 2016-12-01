@@ -178,7 +178,7 @@ class StockController extends Controller
 
     public function actionSynchronize(){ $waiting = Waiting::find()->where(['status' => 1])->all();
         foreach ($waiting as $item){
-            $stock = Stock::find()->where(['LIKE', 'number', $item->track_number])->andWhere(['status' => 1])->one();
+            $stock = Stock::find()->where(['LIKE', 'track_number', $item->track_number])->andWhere(['status' => 1])->one();
             if(!empty($stock)){
                 //$stock = Stock::find()->where(['id' => $model->id])->one();
                 $stock->title = $item->title;
